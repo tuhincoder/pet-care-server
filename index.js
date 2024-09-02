@@ -151,10 +151,14 @@ async function run() {
         // all pets related api (total pets 16 )
         app.get('/api/v1/allPets-read', async (req, res) => {
             const filter = req.query;
+            console.log(filter);
             const query = {
                 name: { $regex: filter.search, $options: 'i' }
             }
-            const result = await allPetCollection.find(query).toArray()
+            // if (filter) {
+            //     query.filter = { $regex: filter.search, $options: 'i' }
+            // }
+            const result = await allPetCollection.find(query).toArray();
             res.send(result)
         })
 
@@ -194,7 +198,6 @@ async function run() {
 
         // pet food store data base (Cart related api)
         app.get('/api/v1/carts', async (req, res) => {
-
             const email = req.query.email;
             // console.log(req.headers);
             const query = { email }
@@ -415,7 +418,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('pet care is running!')
 })
 
 app.listen(port, () => {
